@@ -53,6 +53,6 @@ Verification results are obtained in the usual way. Model parameters are determi
 
     Verification EER: 0.11 +/- 0.22 %
 
-An open system can also be designed, in which the genuine/impostor users do not appear in the training data. This scenario is the most difficult, since the model must capture general differences between genuine and impostor samples. Training data consist of genuine and impostor samples from every user except the target user. Classification accuracy is determined by the genuine and impostor samples for the target user, choosing the model (either genuine or impostor) with the highest likelihood. 
+An open system can also be designed, in which the genuine/impostor users do not appear in the training data. This scenario is the most difficult, since the model must capture general differences between genuine and impostor samples. Training data consist of genuine and impostor samples from every user except the target user. Genuine samples from the target user of the impostor samples are also left out of the training set (so that neither the test user or either of the test signatures appears in the training set). Classification accuracy is determined by the genuine and impostor samples for the target user, choosing the model (either genuine or impostor) with the highest likelihood. 
 
-    Zero-shot verification ACC: 69.13 %
+    Zero-shot verification ACC: 72.60 %

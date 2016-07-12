@@ -93,12 +93,12 @@ def verification_results(df, num_train=1):
 
         # Score the remaining genuine samples
         for session in genuine_test_idx:
-            score = cl.score_df(preprocess(df.loc[l, l, session]))/len(df.loc[l, l, session])
+            score = cl.score_df(preprocess(df.loc[l, l, session])) / len(df.loc[l, l, session])
             scores.append((l, l, session, score))
 
         # Score all of the impostor samples
         for (template, query, session), test_sample in impostor_test.groupby(level=[0, 1, 2]):
-            score = cl.score_df(preprocess(test_sample))/len(test_sample)
+            score = cl.score_df(preprocess(test_sample)) / len(test_sample)
             scores.append((template, query, session, score))
 
     scores = pd.DataFrame(scores, columns=['template', 'query', 'session', 'score'])
@@ -141,8 +141,14 @@ def zeroshot_verification_results(df):
 
         train_genuine = df_genuine[~test_genuine_idx]
         train_impostor = df_impostor[~test_impostor_idx]
+
         test_genuine = df_genuine[test_genuine_idx]
         test_impostor = df_impostor[test_impostor_idx]
+
+        # Remove the impostor signature from the genuine training data
+        if len(test_impostor) > 0:
+            for leave_out_template, _ in test_impostor.reset_index(level=2, drop=True).index.unique():
+                train_genuine = train_genuine[train_genuine.index.get_level_values('template') != leave_out_template]
 
         cl_genuine.fit_df([preprocess(s) for _, s in train_genuine.groupby(level=[0, 1, 2])])
         cl_impostor.fit_df([preprocess(s) for _, s in train_impostor.groupby(level=[0, 1, 2])])
