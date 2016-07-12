@@ -136,8 +136,8 @@ def zeroshot_verification_results(df):
         test_genuine_idx = (df_genuine.index.get_level_values('template') == l) & (
             df_genuine.index.get_level_values('query') == l)
 
-        test_impostor_idx = (df_impostor.index.get_level_values('template') == l) & (
-            df_impostor.index.get_level_values('query') != l)
+        test_impostor_idx = (df_impostor.index.get_level_values('template') != l) & (
+            df_impostor.index.get_level_values('query') == l)
 
         train_genuine = df_genuine[~test_genuine_idx]
         train_impostor = df_impostor[~test_impostor_idx]
