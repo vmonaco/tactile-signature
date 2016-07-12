@@ -1,12 +1,12 @@
 ## Tactile signature identification and verification
 
-<div align="center">
-  <img src="figures/signature.gif"><br><br>
-</div>
-
 Part of the [2016 Telluride Neuromorphic Cognition Engineering Workshop](http://telluride.iniforum.ch/).
 
 Tactile signatures were collected from 11 participants. Signatures were recorded on a 64x64 tactile array. Each signature consists of a sequence of tactile events. Each event is a 4-tuple, comprised of a timestamp, x and y coordinates, and type of event (pressure increase or decrease).
+
+<div align="center">
+  <img src="figures/signature.gif">
+</div>
 
 Identification and verification results were obtained with the partially observable hidden Markov model (POHMM), using the [pohmm](https://github.com/vmonaco/pohmm) python package. Parameters are conditioned on the event polarity (pressure increase or decrease). Features include the time interval and motion in the x and y direction. The time interval is modelled by a lognormal distribution and motion by a normal distribution.
 
