@@ -1,5 +1,9 @@
 ## Tactile signature identification and verification
 
+<div align="center">
+  <img src="figures/signature.gif"><br><br>
+</div>
+
 Part of the [2016 Telluride Neuromorphic Cognition Engineering Workshop](http://telluride.iniforum.ch/).
 
 Tactile signatures were collected from 11 participants. Signatures were recorded on a 64x64 tactile array. Each signature consists of a sequence of tactile events. Each event is a 4-tuple, comprised of a timestamp, x and y coordinates, and type of event (pressure increase or decrease).

@@ -135,10 +135,10 @@ if __name__ == '__main__':
     data_dir = sys.argv[1]
 
     # # Animate a window
-    # animate_sample(load_lsa(data_dir + '/WW_JW_02.lsa'))
+    animate_sample(load_lsa(data_dir + '/WW_JW_02.lsa'))
 
     # Create a gif with the out parameter
     animate_sample(load_lsa(data_dir + '/WW_JW_02.lsa'), out='signature.gif', update_window=100)
-    aoeu
+
     df = load_tactile(data_dir)
     embed()
