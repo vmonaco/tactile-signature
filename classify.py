@@ -33,7 +33,7 @@ def pohmm_factory():
     Factory function to create the classifier objects
     """
     return Pohmm(n_hidden_states=2,
-                 init_spread=2,
+                 init_spread=1,
                  emissions=[('dt', 'lognormal'), ('dx', 'normal'), ('dy', 'normal')],
                  smoothing='freq',
                  init_method='obs',
@@ -163,6 +163,8 @@ if __name__ == '__main__':
 
     data_dir = sys.argv[1]
     df = load_tactile(data_dir)
-    identification_results(df)
-    verification_results(df)
+
+    # identification_results(df, num_train=1)
+    # identification_results(df, num_train=5)
+    # verification_results(df)
     zeroshot_verification_results(df)

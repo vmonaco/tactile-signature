@@ -4,10 +4,10 @@ More info coming soon...
     
 ## POHMM experimental results
 
-    Verification EER: 0.19 +/- 0.28
+    Verification EER: 0.19% +/- 0.28
     
-    One-shot identification (HMM): 50.00%
-    One-shot identification: 73.15%
+    One-shot identification (HMM): 56.48%
+    One-shot identification: 71.30%
+    Train 5 identification: 78.33%
     
-    Zero-shot verification, all features: 66.76%
-    Zero-shot verification, time intervals: 65.88%
+    Zero-shot verification: 66.76%
