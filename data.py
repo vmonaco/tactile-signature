@@ -63,13 +63,14 @@ def load_tactile(data_dir):
     return pd.concat(dfs).sort_index()
 
 
-def animate_sample(sample, update_step=50, update_interval=1, out=None):
+def animate_sample(sample, update_window=50, update_interval=1, out=None):
     """
     Animate a tactile sample using matplotlib.
 
     :param sample: a tactile sample loaded with the load_lsa function
     :param update_step: size of the update window in milliseconds
     :param update_interval: time between screen updates in milliseconds
+    :param out: optional filename to save the animation
     """
     if out is not None:
         import matplotlib
@@ -79,7 +80,7 @@ def animate_sample(sample, update_step=50, update_interval=1, out=None):
     import matplotlib.animation as animation
     from matplotlib import gridspec
 
-    T = int(np.ceil((sample['t'].max() / 10) / update_step))
+    T = int(np.ceil((sample['t'].max() / 10) / update_window))
 
     fig = plt.figure(figsize=(6, 7))
     gs = gridspec.GridSpec(2, 1, height_ratios=[6, 1])
@@ -104,8 +105,8 @@ def animate_sample(sample, update_step=50, update_interval=1, out=None):
         if t_step == 0:
             return
 
-        begin_t = ((t_step * update_step) - update_step) % (T * update_step)
-        end_t = (t_step * update_step) % (T * update_step)
+        begin_t = ((t_step * update_window) - update_window) % (T * update_window)
+        end_t = (t_step * update_window) % (T * update_window)
 
         s = sample[(sample['t'] >= begin_t * 10) & (sample['t'] < end_t * 10)]
         on_spikes.set_offsets(s[s['p'].view(np.bool)][['x', 'y']].view(np.uint8))
@@ -133,11 +134,11 @@ if __name__ == '__main__':
 
     data_dir = sys.argv[1]
 
-    # Animate a window
-    animate_sample(load_lsa(data_dir + '/DS_DS_01.lsa'))
+    # # Animate a window
+    # animate_sample(load_lsa(data_dir + '/WW_JW_02.lsa'))
 
     # Create a gif with the out parameter
-    animate_sample(load_lsa(data_dir + '/DS_DS_01.lsa'), out='signature.gif')
-
+    animate_sample(load_lsa(data_dir + '/WW_JW_02.lsa'), out='signature.gif', update_window=100)
+    aoeu
     df = load_tactile(data_dir)
     embed()
