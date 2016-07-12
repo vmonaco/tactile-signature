@@ -91,15 +91,20 @@ def verification_results(df, num_train=1):
 
         cl.fit_df([preprocess(df.loc[l, l, session]) for session in genuine_train_idx])
 
+        # Score the remaining genuine samples
         for session in genuine_test_idx:
-            score = cl.score_df(preprocess(df.loc[l, l, session]))
+            score = cl.score_df(preprocess(df.loc[l, l, session]))/len(df.loc[l, l, session])
             scores.append((l, l, session, score))
 
+        # Score all of the impostor samples
         for (template, query, session), test_sample in impostor_test.groupby(level=[0, 1, 2]):
-            score = cl.score_df(preprocess(test_sample))
+            score = cl.score_df(preprocess(test_sample))/len(test_sample)
             scores.append((template, query, session, score))
 
     scores = pd.DataFrame(scores, columns=['template', 'query', 'session', 'score'])
+
+    # for l in df.index.get_level_values('template').unique():
+
 
     def eer_from_scores(s):
         far, tpr, thresholds = roc_curve((s['template'] == s['query']).values, s['score'])
@@ -128,15 +133,16 @@ def zeroshot_verification_results(df):
     for l in df.index.get_level_values('template').unique():
         print('Fitting', l)
 
-        train_genuine_idx = (df_genuine.index.get_level_values('template') != l) & (
-            df_genuine.index.get_level_values('query') != l)
-        train_impostor_idx = (df_impostor.index.get_level_values('template') != l) & (
+        test_genuine_idx = (df_genuine.index.get_level_values('template') == l) & (
+            df_genuine.index.get_level_values('query') == l)
+
+        test_impostor_idx = (df_impostor.index.get_level_values('template') == l) & (
             df_impostor.index.get_level_values('query') != l)
 
-        train_genuine = df_genuine[train_genuine_idx]
-        train_impostor = df_impostor[train_impostor_idx]
-        test_genuine = df_genuine[~train_genuine_idx]
-        test_impostor = df_impostor[~train_impostor_idx]
+        train_genuine = df_genuine[~test_genuine_idx]
+        train_impostor = df_impostor[~test_impostor_idx]
+        test_genuine = df_genuine[test_genuine_idx]
+        test_impostor = df_impostor[test_impostor_idx]
 
         cl_genuine.fit_df([preprocess(s) for _, s in train_genuine.groupby(level=[0, 1, 2])])
         cl_impostor.fit_df([preprocess(s) for _, s in train_impostor.groupby(level=[0, 1, 2])])
@@ -164,7 +170,7 @@ if __name__ == '__main__':
     data_dir = sys.argv[1]
     df = load_tactile(data_dir)
 
-    # identification_results(df, num_train=1)
-    # identification_results(df, num_train=5)
-    # verification_results(df)
+    identification_results(df, num_train=1)
+    identification_results(df, num_train=5)
+    verification_results(df, num_train=1)
     zeroshot_verification_results(df)
