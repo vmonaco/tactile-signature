@@ -95,9 +95,9 @@ def animate_sample(sample, update_window=50, update_interval=1, out=None):
     ax_time.set_xlabel('Time (ms)')
     ax_time.get_yaxis().set_ticks([])
 
-    on_spikes = ax_spikes.scatter([], [], c='r', alpha=0.5, label='Pressure increase')
-    off_spikes = ax_spikes.scatter([], [], c='b', alpha=0.5, label='Pressure decrease')
-    timeline = ax_time.scatter(0, 0, c='k')
+    on_spikes = ax_spikes.scatter([], [], c='r', marker='s', lw=0, alpha=0.5, label='Pressure increase')
+    off_spikes = ax_spikes.scatter([], [], c='b', marker='s', lw=0, alpha=0.5, label='Pressure decrease')
+    timeline = ax_time.scatter(0, 0, c='k', marker='|', s=200)
 
     ax_spikes.legend(loc='upper right')
 
