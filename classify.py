@@ -113,7 +113,7 @@ def verification_results(df, num_train=1):
         return np.mean([far[idx], frr[idx]])
 
     eers = scores.groupby(['template']).apply(eer_from_scores)
-    print('Verification EER: %.2f +/- %.2f' % (eers.mean(), eers.std()))
+    print('Verification EER: %.4f +/- %.4f' % (eers.mean(), eers.std()))
 
 
 def zeroshot_verification_results(df):
@@ -176,7 +176,7 @@ if __name__ == '__main__':
     data_dir = sys.argv[1]
     df = load_tactile(data_dir)
 
-    identification_results(df, num_train=1)
-    identification_results(df, num_train=5)
+    # identification_results(df, num_train=1)
+    # identification_results(df, num_train=5)
     verification_results(df, num_train=1)
-    zeroshot_verification_results(df)
+    # zeroshot_verification_results(df)
